@@ -1,0 +1,3216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SWASTHYAAI - Health Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #06120f;
+            color: #f3fff9;
+            min-height: 100vh;
+        }
+
+        
+
+        .navbar {
+            height: 72px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: rgba(5,18,15,0.95);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #18c992;
+            color: #062019;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: #9caea7;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .signup-btn {
+            background: #18c992;
+            border: none;
+            color: #062019;
+            padding: 13px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        
+
+        .hero {
+            min-height: calc(100vh - 72px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1280px;
+            margin: auto;
+            padding: 70px 40px 80px;
+        }
+
+        .hero-left {
+            padding-left: 10px;
+        }
+
+        .language-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(24,201,146,0.4);
+            background: rgba(24,201,146,0.08);
+            color: #21d69d;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .language-dot {
+            width: 9px;
+            height: 9px;
+            background: #22d79e;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #22d79e;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 5vw, 75px);
+            line-height: 0.98;
+            letter-spacing: -3px;
+            max-width: 720px;
+            margin-bottom: 18px;
+        }
+
+        .hero-hindi {
+            color: #25d69e;
+            font-size: clamp(29px, 3vw, 45px);
+            font-weight: 700;
+            margin-bottom: 27px;
+        }
+
+        .hero-description {
+            color: #9caea7;
+            font-size: 19px;
+            line-height: 1.65;
+            max-width: 620px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .primary-btn {
+            background: #18c992;
+            color: #062019;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 13px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(24,201,146,0.18);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            background: #24d9a0;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #e9f5f0;
+            border: 1px solid rgba(255,255,255,0.14);
+            padding: 16px 28px;
+            border-radius: 13px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            color: #8fa49c;
+            font-size: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .feature-icon {
+            color: #1dd29b;
+            font-size: 20px;
+        }
+
+        
+
+        .chat-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .chat-card {
+            width: 100%;
+            max-width: 635px;
+            min-height: 670px;
+            background: linear-gradient(
+                145deg,
+                rgba(22,47,39,0.95),
+                rgba(9,25,20,0.98)
+            );
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+
+        .chat-header {
+            height: 96px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+        }
+
+        .bot-info {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .bot-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #18c992;
+            color: #062019;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 0 25px rgba(24,201,146,0.2);
+        }
+
+        .bot-name {
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .online {
+            color: #24d79f;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .language-select {
+            background: #11261f;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .chat-body {
+            height: 475px;
+            padding: 26px 24px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .message {
+            max-width: 90%;
+            padding: 17px 19px;
+            border-radius: 16px;
+            margin-bottom: 13px;
+            font-size: 16px;
+            line-height: 1.55;
+            white-space: normal;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: #172b24;
+            color: #e4eee9;
+            border-top-left-radius: 5px;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            white-space: pre-wrap;
+            background: #18c992;
+            color: #062019;
+            border-top-right-radius: 5px;
+            font-weight: 500;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: -4px;
+            margin-bottom: 14px;
+        }
+
+        .listen-btn {
+            background: transparent;
+            color: #b7c7c1;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 9px;
+            padding: 7px 12px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .listen-btn:hover {
+            color: #fff;
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .suggestion {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            color: #d3dfda;
+            padding: 10px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .suggestion:hover {
+            border-color: #18c992;
+            color: #fff;
+        }
+
+        .chat-input-area {
+            min-height: 100px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 20px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #0c1b16;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 15px;
+            padding: 17px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: #18c992;
+        }
+
+        .send-btn {
+            width: 58px;
+            height: 58px;
+            border: none;
+            border-radius: 15px;
+            background: #18c992;
+            color: #062019;
+            font-size: 23px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .send-btn:hover {
+            background: #24d9a0;
+        }
+
+        .input-tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-tool {
+            width: 58px;
+            height: 58px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 15px;
+            background: #0c1b16;
+            color: #d8e6e0;
+            font-size: 21px;
+            cursor: pointer;
+        }
+
+        .input-tool:hover,
+        .input-tool.active {
+            border-color: #18c992;
+            color: #18c992;
+            background: #10251e;
+        }
+
+        .input-tool:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .voice-status {
+            display: none;
+            margin: 8px 20px 0;
+            color: #20d49d;
+            font-size: 13px;
+        }
+
+        .image-preview {
+            display: none;
+            margin: 0 20px 10px;
+            padding: 10px;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            background: #0c1b16;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .image-preview img {
+            width: 58px;
+            height: 58px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .image-preview-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .image-preview-name {
+            color: #e4eee9;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .image-preview-hint {
+            color: #8fa49c;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .remove-image {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 9px;
+            background: #182a23;
+            color: #ffaaa0;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .image-question {
+            display: none;
+            margin: 0 20px 10px;
+        }
+
+        .image-question input {
+            width: 100%;
+            background: #0c1b16;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 12px;
+            padding: 12px 14px;
+            outline: none;
+        }
+
+        .image-question input:focus {
+            border-color: #18c992;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        
+
+        .hospital-section {
+            display: none;
+            max-width: 1280px;
+            margin: 0 auto 80px;
+            padding: 0 40px;
+        }
+
+        .hospital-section.visible {
+            display: block;
+        }
+
+        .hospital-container {
+            background: #0c1c17;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .hospital-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .hospital-title h2 {
+            font-size: 28px;
+        }
+
+        .hospital-title span {
+            color: #20d49d;
+        }
+
+        .hospital-subtitle {
+            color: #91a49c;
+            margin-bottom: 22px;
+        }
+
+        .hospital-location-note {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #8fa59c;
+        }
+
+        .hospital-status {
+            padding: 14px;
+            border-radius: 12px;
+            background: #122720;
+            color: #aebdb7;
+            margin-bottom: 20px;
+        }
+
+        .hospital-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .hospital-card {
+            background: #101f1a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 19px;
+        }
+
+        .hospital-card h3 {
+            font-size: 17px;
+            margin-bottom: 9px;
+            color: #f1faf6;
+        }
+
+        .hospital-distance {
+            color: #20d49d;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .hospital-address {
+            color: #91a49c;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 13px;
+        }
+
+        .hospital-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hospital-action {
+            text-decoration: none;
+            display: inline-block;
+            background: #162d25;
+            border: 1px solid rgba(255,255,255,0.10);
+            color: #d8e6e0;
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-size: 13px;
+        }
+
+        .hospital-action.primary {
+            background: #18c992;
+            color: #062019;
+            border-color: #18c992;
+            font-weight: 700;
+        }
+
+        
+
+        .typing {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .typing span {
+            width: 7px;
+            height: 7px;
+            background: #82a096;
+            border-radius: 50%;
+            animation: typing 1s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        
+
+        @media (max-width: 950px) {
+
+            .navbar {
+                padding: 0 25px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 50px 22px;
+            }
+
+            .hero-left {
+                padding-left: 0;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .chat-card {
+                max-width: 100%;
+            }
+
+            .hospital-section {
+                padding: 0 22px;
+            }
+
+            .hospital-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .navbar {
+                height: 65px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .signup-btn,
+            .login-btn {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 35px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+                letter-spacing: -2px;
+            }
+
+            .hero-hindi {
+                font-size: 27px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .features {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .chat-card {
+                border-radius: 20px;
+                min-height: 600px;
+            }
+
+            .chat-input-area {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .input-tools {
+                width: 100%;
+            }
+
+            .input-tool,
+            .send-btn {
+                flex: 1;
+            }
+
+            .chat-header {
+                padding: 0 15px;
+            }
+
+            .language-select {
+                width: 100px;
+            }
+
+            .chat-body {
+                height: 410px;
+            }
+
+            .hospital-section {
+                padding: 0 15px;
+            }
+
+            .hospital-container {
+                padding: 20px;
+            }
+        }
+    </style>
+
+<style>
+
+.chat-card .message {
+    width: fit-content;
+    max-width: 92%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    white-space: normal;
+}
+.chat-card .bot-message { align-self: flex-start; }
+.chat-card .user-message { align-self: flex-end; white-space: pre-wrap; }
+.chat-card .message-actions { width: fit-content; }
+.chat-card .input-tools { flex: none; }
+.chat-card .chat-input { min-width: 0; }
+@media (max-width: 550px) {
+    .chat-card .message { max-width: 94%; }
+}
+</style>
+
+
+<style>
+
+.chat-input-area {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    min-height: auto !important;
+    padding: 18px 20px 20px !important;
+}
+
+.chat-input-area .image-preview {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+}
+
+.chat-input-area .image-question {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+}
+
+.chat-input-area .image-question input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.chat-controls {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-controls .chat-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+}
+
+.chat-controls .input-tools {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-controls .input-tool,
+.chat-controls .send-btn {
+    flex: 0 0 58px !important;
+}
+
+.chat-input-area .voice-status {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+    .chat-input-area {
+        padding: 14px !important;
+    }
+
+    .chat-controls {
+        gap: 7px;
+    }
+
+    .chat-controls .input-tools {
+        gap: 6px;
+    }
+
+    .chat-controls .input-tool,
+    .chat-controls .send-btn {
+        flex-basis: 50px !important;
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    .chat-controls .chat-input {
+        padding: 14px !important;
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .chat-controls {
+        flex-wrap: wrap;
+    }
+
+    .chat-controls .chat-input {
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .chat-controls .input-tools {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+</style>
+
+
+<style>
+
+.emergency-panel {
+    margin: 12px 0;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 110, 110, .35);
+    border-radius: 14px;
+    background: rgba(110, 30, 30, .18);
+}
+.emergency-panel strong { display:block; margin-bottom:6px; }
+.emergency-panel .emergency-actions {
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;
+}
+.emergency-panel a {
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:8px 12px; border-radius:10px; text-decoration:none;
+    border:1px solid rgba(255,255,255,.16);
+}
+.emergency-panel .call-112 { font-weight:700; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">⌁</div>
+        <span>Swast<h style="color:#18c992;">hya</h>AI</span>
+    </div>
+
+    <div class="nav-right">
+
+        <a class="nav-link" href="#chat">How it works</a>
+
+        
+        <button class="login-btn" onclick="showLoginMessage()">
+            Log in
+        </button>
+
+        <button class="signup-btn" onclick="showLoginMessage()">
+            Sign up free
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+
+<main>
+
+<section class="hero">
+
+    
+
+    <div class="hero-left">
+
+        <div class="language-pill">
+            <span class="language-dot"></span>
+            12 Indian languages
+        </div>
+
+        <h1>
+            Health answers in<br>
+            your language.
+        </h1>
+
+        <div class="hero-hindi">
+            आपकी भाषा में सेहत को जानकारो
+        </div>
+
+        <p class="hero-description">
+            Ask a health question and get clear, calm guidance
+            you can actually understand. Free to try, no sign-up
+            needed.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button class="primary-btn" onclick="focusChat()">
+                Ask a question
+            </button>
+
+            <button class="secondary-btn" onclick="findHospitals()">
+                Find nearby hospitals
+            </button>
+
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <span class="feature-icon">✓</span>
+                <span>Never a diagnosis</span>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">♙</span>
+                <span>Private to you</span>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">◷</span>
+                <span>Answers in seconds</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    
+
+    <div class="chat-wrapper" id="chat">
+
+        <div class="chat-card">
+
+            
+
+            <div class="chat-header">
+
+                <div class="bot-info">
+
+                    <div class="bot-icon">
+                        ⌁
+                    </div>
+
+                    <div>
+                        <div class="bot-name">
+                            SwasthyaAI
+                        </div>
+
+                        <div class="online">
+                            ● Online
+                        </div>
+                    </div>
+
+                </div>
+
+                <select
+                    id="languageSelect"
+                    class="language-select"
+                    onchange="changeLanguage()"
+                >
+                    <option value="English">English</option>
+                    <option value="Hindi">हिन्दी</option>
+                    <option value="Bengali">বাংলা</option>
+                    <option value="Telugu">తెలుగు</option>
+                    <option value="Marathi">मराठी</option>
+                    <option value="Tamil">தமிழ்</option>
+                    <option value="Gujarati">ગુજરાતી</option>
+                    <option value="Kannada">ಕನ್ನಡ</option>
+                    <option value="Malayalam">മലയാളം</option>
+                    <option value="Punjabi">ਪੰਜਾਬੀ</option>
+                    <option value="Urdu">اردو</option>
+                    <option value="Odia">ଓଡ଼ିଆ</option>
+                </select>
+
+            </div>
+
+
+            
+
+            <div class="chat-body" id="chatBody">
+
+                <div class="message bot-message" id="welcomeMessage">Namaste! I'm SwasthyaAI. Ask me anything about staying healthy — in whichever language you're comfortable with.</div>
+
+                <div class="message-actions">
+
+                    <button
+                        class="listen-btn"
+                        onclick="speakText(document.getElementById('welcomeMessage').innerText)"
+                    >
+                        🔊 Listen
+                    </button>
+
+                </div>
+
+
+                <div class="suggestions">
+
+                    <button
+                        class="suggestion"
+                        onclick="askSuggestion('What foods help with acidity?')"
+                    >
+                        What foods help with acidity?
+                    </button>
+
+                    <button
+                        class="suggestion"
+                        onclick="askSuggestion('बुखार में क्या करें?')"
+                    >
+                        बुखार में क्या करें?
+                    </button>
+
+                    <button
+                        class="suggestion"
+                        onclick="askSuggestion('How much water should I drink?')"
+                    >
+                        How much water should I drink?
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            
+
+            <div class="chat-input-area">
+
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImage" src="" alt="Selected health image">
+                    <div class="image-preview-info">
+                        <div class="image-preview-name" id="imageFileName">Image selected</div>
+                        <div class="image-preview-hint">Ask a question about this image, then press send.</div>
+                    </div>
+                    <button class="remove-image" type="button" onclick="removeImage()" title="Remove image">×</button>
+                </div>
+
+                <div class="image-question" id="imageQuestion">
+                    <input
+                        type="text"
+                        id="imageQuestionInput"
+                        placeholder="What would you like me to look at?"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="chat-controls">
+                    <input
+                        type="text"
+                        id="messageInput"
+                        class="chat-input"
+                        placeholder="Ask a health question..."
+                        autocomplete="off"
+                    >
+
+                    <div class="input-tools">
+                        <button
+                            class="input-tool"
+                            id="voiceButton"
+                            type="button"
+                            title="Voice input"
+                            onclick="toggleVoice()"
+                        >
+                            🎙️
+                        </button>
+
+                        <button
+                            class="input-tool"
+                            type="button"
+                            title="Upload image"
+                            onclick="document.getElementById('imageInput').click()"
+                        >
+                            📷
+                        </button>
+
+                        <button
+                            class="send-btn"
+                            id="sendButton"
+                            type="button"
+                            onclick="handleSend()"
+                        >
+                            ➤
+                        </button>
+                    </div>
+                </div>
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/jpeg,image/png,image/webp"
+                    class="hidden"
+                >
+
+                <div class="voice-status" id="voiceStatus">🎙️ Listening... Speak now.</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+<section class="hospital-section" id="hospitalSection">
+
+    <div class="hospital-container">
+
+        <div class="hospital-title">
+
+            <h2>
+                📍 Nearby <span>Hospitals</span>
+            </h2>
+
+            <button
+                class="secondary-btn"
+                style="padding:10px 15px;font-size:14px;"
+                onclick="findHospitals()"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+        <p class="hospital-subtitle">
+            Hospitals are ordered from closest to farthest from
+            your current location.
+        </p>
+
+        <div class="hospital-status" id="hospitalStatus">
+            Click "Find nearby hospitals" to use your device location.
+        </div>
+        <div class="hospital-location-note" id="hospitalLocationNote"></div>
+
+        <div class="hospital-list" id="hospitalList"></div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<<script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
+
+    const chatBody =
+        document.getElementById("chatBody");
+
+    const messageInput =
+        document.getElementById("messageInput");
+
+    const sendButton =
+        document.getElementById("sendButton");
+
+    const languageSelect =
+        document.getElementById("languageSelect");
+
+    const imageInput =
+        document.getElementById("imageInput");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+    const previewImage =
+        document.getElementById("previewImage");
+
+    const imageFileName =
+        document.getElementById("imageFileName");
+
+    const imageQuestion =
+        document.getElementById("imageQuestion");
+
+    const imageQuestionInput =
+        document.getElementById(
+            "imageQuestionInput"
+        );
+
+    const voiceButton =
+        document.getElementById(
+            "voiceButton"
+        );
+
+    const voiceStatus =
+        document.getElementById(
+            "voiceStatus"
+        );
+
+    const hospitalSection =
+        document.getElementById(
+            "hospitalSection"
+        );
+
+    const hospitalList =
+        document.getElementById(
+            "hospitalList"
+        );
+
+    const hospitalStatus =
+        document.getElementById(
+            "hospitalStatus"
+        );
+
+    const hospitalLocationNote =
+        document.getElementById(
+            "hospitalLocationNote"
+        );
+
+
+    // =========================================================
+    // STATE
+    // =========================================================
+
+    let selectedImage = null;
+
+    let recognition = null;
+
+    let isListening = false;
+
+    let hospitalRequestRunning = false;
+
+
+    // =========================================================
+    // CHAT HELPERS
+    // =========================================================
+
+    function scrollChat() {
+
+        chatBody.scrollTop =
+            chatBody.scrollHeight;
+
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeAttribute(value) {
+
+        return escapeHTML(value);
+
+    }
+
+
+    function formatMarkdown(raw) {
+
+        const escaped =
+            escapeHTML(
+                String(raw || "").trim()
+            );
+
+        const lines =
+            escaped.split("\n");
+
+        let html = "";
+
+        let listType = null;
+
+
+        function closeList() {
+
+            if (listType) {
+
+                html +=
+                    `</${listType}>`;
+
+                listType = null;
+
+            }
+
+        }
+
+
+        function inline(text) {
+
+            return text
+                .replace(
+                    /\*\*(.+?)\*\*/g,
+                    "<strong>$1</strong>"
+                )
+                .replace(
+                    /(^|[^*])\*(?!\s)(.+?)\*/g,
+                    "$1<em>$2</em>"
+                );
+
+        }
+
+
+        for (const line of lines) {
+
+            const t = line.trim();
+
+
+            if (!t) {
+
+                closeList();
+
+                continue;
+
+            }
+
+
+            let match;
+
+
+            if (
+                (match =
+                    t.match(
+                        /^#{1,3}\s+(.*)$/
+                    ))
+            ) {
+
+                closeList();
+
+                html +=
+                    `<h3>${inline(
+                        match[1]
+                    )}</h3>`;
+
+            }
+
+            else if (
+                (match =
+                    t.match(
+                        /^[-*•]\s+(.*)$/
+                    ))
+            ) {
+
+                if (listType !== "ul") {
+
+                    closeList();
+
+                    html += "<ul>";
+
+                    listType = "ul";
+
+                }
+
+
+                html +=
+                    `<li>${inline(
+                        match[1]
+                    )}</li>`;
+
+            }
+
+            else if (
+                (match =
+                    t.match(
+                        /^\d+[.)]\s+(.*)$/
+                    ))
+            ) {
+
+                if (listType !== "ol") {
+
+                    closeList();
+
+                    html += "<ol>";
+
+                    listType = "ol";
+
+                }
+
+
+                html +=
+                    `<li>${inline(
+                        match[1]
+                    )}</li>`;
+
+            }
+
+            else {
+
+                closeList();
+
+                html +=
+                    `<p>${inline(t)}</p>`;
+
+            }
+
+        }
+
+
+        closeList();
+
+
+        return html || "<p></p>";
+
+    }
+
+
+    // =========================================================
+    // MESSAGES
+    // =========================================================
+
+    function addUserMessage(text) {
+
+        const wrap =
+            document.createElement(
+                "div"
+            );
+
+        wrap.className =
+            "message user-message";
+
+        wrap.textContent = text;
+
+        chatBody.appendChild(wrap);
+
+        scrollChat();
+
+    }
+
+
+    function addBotMessage(text) {
+
+        const wrap =
+            document.createElement(
+                "div"
+            );
+
+        wrap.className =
+            "message bot-message";
+
+
+        const safeText =
+            String(
+                text ||
+                "I couldn't generate a response."
+            );
+
+
+        wrap.innerHTML =
+            formatMarkdown(
+                safeText
+            );
+
+
+        chatBody.appendChild(
+            wrap
+        );
+
+
+        const actions =
+            document.createElement(
+                "div"
+            );
+
+        actions.className =
+            "message-actions";
+
+
+        const listen =
+            document.createElement(
+                "button"
+            );
+
+        listen.type =
+            "button";
+
+        listen.className =
+            "listen-btn";
+
+        listen.textContent =
+            "🔊 Listen";
+
+
+        listen.addEventListener(
+            "click",
+            () => {
+                speakText(safeText);
+            }
+        );
+
+
+        actions.appendChild(
+            listen
+        );
+
+        chatBody.appendChild(
+            actions
+        );
+
+
+        scrollChat();
+
+    }
+
+
+    function addTypingMessage() {
+
+        const wrap =
+            document.createElement(
+                "div"
+            );
+
+        wrap.className =
+            "message bot-message";
+
+
+        wrap.innerHTML = `
+            <div class="typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+
+
+        chatBody.appendChild(
+            wrap
+        );
+
+        scrollChat();
+
+
+        return wrap;
+
+    }
+
+
+    // =========================================================
+    // CHAT
+    // =========================================================
+
+    async function sendMessage() {
+
+        const message =
+            messageInput.value.trim();
+
+
+        if (
+            !message ||
+            sendButton.disabled
+        ) {
+
+            return;
+
+        }
+
+
+        addUserMessage(
+            message
+        );
+
+
+        messageInput.value = "";
+
+        messageInput.style.height =
+            "auto";
+
+
+        const typing =
+            addTypingMessage();
+
+
+        sendButton.disabled =
+            true;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/chat",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        credentials:
+                            "same-origin",
+
+                        body:
+                            JSON.stringify({
+
+                                message:
+                                    message,
+
+                                language:
+                                    languageSelect.value
+
+                            })
+                    }
+                );
+
+
+            const contentType =
+                response.headers.get(
+                    "content-type"
+                ) || "";
+
+
+            let data = {};
+
+
+            if (
+                contentType.includes(
+                    "application/json"
+                )
+            ) {
+
+                data =
+                    await response.json();
+
+            }
+
+            else {
+
+                const text =
+                    await response.text();
+
+                throw new Error(
+                    `Server returned ${
+                        response.status
+                    }: ${
+                        text.slice(0, 300)
+                    }`
+                );
+
+            }
+
+
+            typing.remove();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "AI service unavailable"
+                );
+
+            }
+
+
+            addBotMessage(
+                data.answer
+            );
+
+
+            // =================================================
+            // SERVER-SIDE EMERGENCY DETECTION
+            // =================================================
+
+            if (data.emergency) {
+
+                showEmergencyPanel();
+
+                findHospitals();
+
+            }
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "CHAT ERROR:",
+                error
+            );
+
+
+            typing.remove();
+
+
+            addBotMessage(
+                "I couldn't generate a response right now. " +
+                "Please check that your Flask server and API keys " +
+                "are running correctly."
+            );
+
+        }
+
+        finally {
+
+            sendButton.disabled =
+                false;
+
+            messageInput.focus();
+
+        }
+
+    }
+
+
+    window.sendMessage =
+        sendMessage;
+
+
+    // =========================================================
+    // SUGGESTIONS
+    // =========================================================
+
+    window.askSuggestion =
+        function(text) {
+
+            messageInput.value =
+                text;
+
+            messageInput.focus();
+
+            sendMessage();
+
+        };
+
+
+    // =========================================================
+    // IMAGE SELECT
+    // =========================================================
+
+    imageInput.addEventListener(
+        "change",
+        () => {
+
+            const file =
+                imageInput.files &&
+                imageInput.files[0];
+
+
+            if (!file) {
+
+                return;
+
+            }
+
+
+            const allowed = [
+
+                "image/jpeg",
+
+                "image/png",
+
+                "image/webp"
+
+            ];
+
+
+            if (
+                !allowed.includes(
+                    file.type
+                )
+            ) {
+
+                alert(
+                    "Please select a JPG, PNG, or WebP image."
+                );
+
+                imageInput.value =
+                    "";
+
+                return;
+
+            }
+
+
+            if (
+                file.size >
+                10 * 1024 * 1024
+            ) {
+
+                alert(
+                    "Please choose an image smaller than 10 MB."
+                );
+
+                imageInput.value =
+                    "";
+
+                return;
+
+            }
+
+
+            selectedImage =
+                file;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                (event) => {
+
+                    previewImage.src =
+                        event.target.result;
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+
+            imageFileName.textContent =
+                file.name;
+
+
+            imagePreview.style.display =
+                "flex";
+
+
+            imageQuestion.style.display =
+                "block";
+
+
+            messageInput.placeholder =
+                "Optional: ask something about the image...";
+
+
+            imageQuestionInput.focus();
+
+        }
+    );
+
+
+    // =========================================================
+    // REMOVE IMAGE
+    // =========================================================
+
+    window.removeImage =
+        function() {
+
+            selectedImage =
+                null;
+
+            imageInput.value =
+                "";
+
+            previewImage.src =
+                "";
+
+            imagePreview.style.display =
+                "none";
+
+            imageQuestion.style.display =
+                "none";
+
+            imageQuestionInput.value =
+                "";
+
+            messageInput.value =
+                "";
+
+            messageInput.placeholder =
+                "Ask a health question...";
+
+        };
+
+
+    // =========================================================
+    // IMAGE ANALYSIS
+    // =========================================================
+
+    async function analyzeImage() {
+
+        if (
+            !selectedImage ||
+            sendButton.disabled
+        ) {
+
+            return;
+
+        }
+
+
+        const question =
+            imageQuestionInput.value.trim()
+            ||
+            messageInput.value.trim()
+            ||
+            "Please analyze this image carefully. " +
+            "Describe what is visible, what it could commonly " +
+            "indicate, what I should do next, and any warning signs.";
+
+
+        addUserMessage(
+            `📷 ${question}`
+        );
+
+
+        const typing =
+            addTypingMessage();
+
+
+        sendButton.disabled =
+            true;
+
+
+        try {
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "image",
+                selectedImage
+            );
+
+
+            formData.append(
+                "question",
+                question
+            );
+
+
+            formData.append(
+                "language",
+                languageSelect.value
+            );
+
+
+            const response =
+                await fetch(
+                    "/api/analyze-image",
+                    {
+                        method: "POST",
+
+                        credentials:
+                            "same-origin",
+
+                        body:
+                            formData
+                    }
+                );
+
+
+            const contentType =
+                response.headers.get(
+                    "content-type"
+                ) || "";
+
+
+            let data = {};
+
+
+            if (
+                contentType.includes(
+                    "application/json"
+                )
+            ) {
+
+                data =
+                    await response.json();
+
+            }
+
+            else {
+
+                const text =
+                    await response.text();
+
+                throw new Error(
+                    `Image server returned ${
+                        response.status
+                    }: ${
+                        text.slice(0, 300)
+                    }`
+                );
+
+            }
+
+
+            typing.remove();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Image analysis failed"
+                );
+
+            }
+
+
+            addBotMessage(
+                data.answer
+            );
+
+
+            if (data.emergency) {
+
+                showEmergencyPanel();
+
+                findHospitals();
+
+            }
+
+
+            window.removeImage();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "IMAGE ERROR:",
+                error
+            );
+
+
+            typing.remove();
+
+
+            addBotMessage(
+                "I couldn't analyze that image right now. " +
+                "Please check your API keys and Flask terminal."
+            );
+
+        }
+
+        finally {
+
+            sendButton.disabled =
+                false;
+
+            messageInput.focus();
+
+        }
+
+    }
+
+
+    window.handleSend =
+        async function() {
+
+            if (selectedImage) {
+
+                await analyzeImage();
+
+            }
+
+            else {
+
+                await sendMessage();
+
+            }
+
+        };
+
+
+    // =========================================================
+    // EMERGENCY PANEL
+    // =========================================================
+
+    function showEmergencyPanel() {
+
+        if (
+            document.getElementById(
+                "emergencyPanel"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const panel =
+            document.createElement(
+                "div"
+            );
+
+
+        panel.id =
+            "emergencyPanel";
+
+
+        panel.className =
+            "emergency-panel";
+
+
+        panel.innerHTML = `
+
+            <strong>
+                🚨 Emergency assistance
+            </strong>
+
+            <div>
+                If this is an immediate emergency
+                in India, call <b>112</b> now.
+            </div>
+
+            <div class="emergency-actions">
+
+                <a
+                    class="call-112"
+                    href="tel:112"
+                >
+                    📞 Call 112
+                </a>
+
+                <button
+                    type="button"
+                    class="hospital-action"
+                    id="emergencyHospitalButton"
+                >
+                    📍 Show nearby hospitals
+                </button>
+
+            </div>
+        `;
+
+
+        chatBody.appendChild(
+            panel
+        );
+
+
+        const button =
+            panel.querySelector(
+                "#emergencyHospitalButton"
+            );
+
+
+        if (button) {
+
+            button.addEventListener(
+                "click",
+                () => {
+                    findHospitals();
+                }
+            );
+
+        }
+
+
+        scrollChat();
+
+    }
+
+
+    // =========================================================
+    // HOSPITAL SEARCH
+    // =========================================================
+
+    window.findHospitals =
+        function() {
+
+            if (hospitalRequestRunning) {
+
+                return;
+
+            }
+
+
+            hospitalSection.classList.add(
+                "visible"
+            );
+
+
+            hospitalSection.scrollIntoView(
+                {
+                    behavior: "smooth",
+                    block: "start"
+                }
+            );
+
+
+            hospitalStatus.textContent =
+                "📍 Requesting your device location...";
+
+
+            hospitalLocationNote.textContent =
+                "";
+
+
+            hospitalList.innerHTML =
+                "";
+
+
+            if (
+                !navigator.geolocation
+            ) {
+
+                hospitalStatus.textContent =
+                    "Your browser does not support location services.";
+
+                return;
+
+            }
+
+
+            hospitalRequestRunning =
+                true;
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                async (position) => {
+
+                    const lat =
+                        position.coords.latitude;
+
+                    const lng =
+                        position.coords.longitude;
+
+                    const accuracy =
+                        Math.round(
+                            position.coords.accuracy ||
+                            0
+                        );
+
+
+                    hospitalStatus.textContent =
+                        "📍 Location found. " +
+                        "Finding the 10 closest hospitals...";
+
+
+                    hospitalLocationNote.textContent =
+                        accuracy > 0
+                            ? `Using your device location (accuracy about ±${accuracy} m).`
+                            : "Using your device location.";
+
+
+                    try {
+
+                        await getHospitals(
+                            lat,
+                            lng
+                        );
+
+                    }
+
+                    finally {
+
+                        hospitalRequestRunning =
+                            false;
+
+                    }
+
+                },
+
+
+                (error) => {
+
+                    console.error(
+                        "LOCATION ERROR:",
+                        error
+                    );
+
+
+                    hospitalRequestRunning =
+                        false;
+
+
+                    if (
+                        error.code === 1
+                    ) {
+
+                        hospitalStatus.textContent =
+                            "Location permission was denied. " +
+                            "Please allow location access for this site.";
+
+                    }
+
+                    else if (
+                        error.code === 2
+                    ) {
+
+                        hospitalStatus.textContent =
+                            "Your location could not be determined.";
+
+                    }
+
+                    else if (
+                        error.code === 3
+                    ) {
+
+                        hospitalStatus.textContent =
+                            "Location request timed out. Please try again.";
+
+                    }
+
+                    else {
+
+                        hospitalStatus.textContent =
+                            "Unable to get your location.";
+
+                    }
+
+                },
+
+
+                {
+                    enableHighAccuracy:
+                        true,
+
+                    timeout:
+                        20000,
+
+                    maximumAge:
+                        30000
+
+                }
+
+            );
+
+        };
+
+
+    // =========================================================
+    // GET HOSPITALS
+    // =========================================================
+
+    async function getHospitals(
+        lat,
+        lng
+    ) {
+
+        hospitalStatus.textContent =
+            "🔎 Searching for nearby hospitals...";
+
+
+        try {
+
+            const controller =
+                new AbortController();
+
+
+            const timer =
+                setTimeout(
+                    () => {
+                        controller.abort();
+                    },
+                    60000
+                );
+
+
+            const url =
+                `/api/hospitals` +
+                `?lat=${encodeURIComponent(lat)}` +
+                `&lng=${encodeURIComponent(lng)}`;
+
+
+            const response =
+                await fetch(
+                    url,
+                    {
+                        method: "GET",
+
+                        credentials:
+                            "same-origin",
+
+                        signal:
+                            controller.signal
+                    }
+                );
+
+
+            clearTimeout(
+                timer
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "Hospital service failed"
+                );
+
+            }
+
+
+            const hospitals =
+                Array.isArray(
+                    data.hospitals
+                )
+                    ? data.hospitals
+                    : [];
+
+
+            hospitals.sort(
+                (a, b) =>
+                    Number(
+                        a.distance_meters ??
+                        Infinity
+                    )
+                    -
+                    Number(
+                        b.distance_meters ??
+                        Infinity
+                    )
+            );
+
+
+            hospitalList.innerHTML =
+                "";
+
+
+            if (!hospitals.length) {
+
+                hospitalStatus.textContent =
+                    "No hospitals were found nearby.";
+
+                return;
+
+            }
+
+
+            hospitalStatus.textContent =
+                `${hospitals.length} nearby hospitals found — closest first.`;
+
+
+            hospitals.forEach(
+                (
+                    hospital,
+                    index
+                ) => {
+
+                    renderHospital(
+                        hospital,
+                        index
+                    );
+
+                }
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "HOSPITAL ERROR:",
+                error
+            );
+
+
+            hospitalStatus.textContent =
+                "Could not load nearby hospitals. " +
+                "Please check your internet connection and try again.";
+
+        }
+
+    }
+
+
+    // =========================================================
+    // RENDER HOSPITAL
+    // =========================================================
+
+    function renderHospital(
+        hospital,
+        index
+    ) {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "hospital-card";
+
+
+        const distance =
+            formatDistance(
+                hospital.distance_meters,
+                hospital.distance_km
+            );
+
+
+        let phoneHTML =
+            "";
+
+
+        if (hospital.phone) {
+
+            const cleanPhone =
+                String(
+                    hospital.phone
+                ).replace(
+                    /[^\d+]/g,
+                    ""
+                );
+
+
+            phoneHTML = `
+
+                <a
+                    class="hospital-action"
+                    href="tel:${escapeAttribute(
+                        cleanPhone
+                    )}"
+                >
+                    📞 Call
+                </a>
+
+            `;
+
+        }
+
+
+        let websiteHTML =
+            "";
+
+
+        if (hospital.website) {
+
+            websiteHTML = `
+
+                <a
+                    class="hospital-action"
+                    href="${escapeAttribute(
+                        hospital.website
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🌐 Website
+                </a>
+
+            `;
+
+        }
+
+
+        const directions =
+            hospital.directions_url
+            ||
+            `https://www.google.com/maps/dir/?api=1&destination=` +
+            `${encodeURIComponent(
+                hospital.latitude
+            )},` +
+            `${encodeURIComponent(
+                hospital.longitude
+            )}`;
+
+
+        card.innerHTML = `
+
+            <h3>
+                ${index + 1}.
+                ${escapeHTML(
+                    hospital.name ||
+                    "Hospital"
+                )}
+            </h3>
+
+            <div class="hospital-distance">
+                📍 ${escapeHTML(
+                    distance
+                )}
+            </div>
+
+            <div class="hospital-address">
+                ${escapeHTML(
+                    hospital.address ||
+                    "Address unavailable"
+                )}
+            </div>
+
+            <div class="hospital-actions">
+
+                <a
+                    class="hospital-action primary"
+                    href="${escapeAttribute(
+                        directions
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    🗺️ Directions
+                </a>
+
+                ${phoneHTML}
+
+                ${websiteHTML}
+
+            </div>
+        `;
+
+
+        hospitalList.appendChild(
+            card
+        );
+
+    }
+
+
+    // =========================================================
+    // DISTANCE DISPLAY
+    // =========================================================
+
+    function formatDistance(
+        meters,
+        kilometers
+    ) {
+
+        const m =
+            Number(meters);
+
+
+        if (
+            Number.isFinite(m)
+        ) {
+
+            if (m < 1000) {
+
+                return `${Math.round(
+                    m
+                )} m away`;
+
+            }
+
+
+            return `${(
+                m / 1000
+            ).toFixed(2)} km away`;
+
+        }
+
+
+        const km =
+            Number(kilometers);
+
+
+        if (
+            Number.isFinite(km)
+        ) {
+
+            return `${km.toFixed(
+                2
+            )} km away`;
+
+        }
+
+
+        return "Distance unavailable";
+
+    }
+
+
+    // =========================================================
+    // VOICE
+    // =========================================================
+
+    function getSpeechLocale(
+        language
+    ) {
+
+        const locales = {
+
+            English: "en-IN",
+
+            Hindi: "hi-IN",
+
+            Bengali: "bn-IN",
+
+            Telugu: "te-IN",
+
+            Marathi: "mr-IN",
+
+            Tamil: "ta-IN",
+
+            Gujarati: "gu-IN",
+
+            Kannada: "kn-IN",
+
+            Malayalam: "ml-IN",
+
+            Punjabi: "pa-IN",
+
+            Urdu: "ur-IN",
+
+            Odia: "or-IN"
+
+        };
+
+
+        return (
+            locales[language]
+            ||
+            "en-IN"
+        );
+
+    }
+
+
+    function setupRecognition() {
+
+        const SpeechRecognition =
+            window.SpeechRecognition
+            ||
+            window.webkitSpeechRecognition;
+
+
+        if (!SpeechRecognition) {
+
+            return null;
+
+        }
+
+
+        const instance =
+            new SpeechRecognition();
+
+
+        instance.continuous =
+            false;
+
+        instance.interimResults =
+            true;
+
+        instance.maxAlternatives =
+            1;
+
+
+        instance.onstart =
+            () => {
+
+                isListening =
+                    true;
+
+                voiceButton.classList.add(
+                    "active"
+                );
+
+                voiceStatus.style.display =
+                    "block";
+
+                voiceStatus.textContent =
+                    "🎙️ Listening... Speak now.";
+
+            };
+
+
+        instance.onresult =
+            (event) => {
+
+                let finalText =
+                    "";
+
+                let interimText =
+                    "";
+
+
+                for (
+                    let i =
+                        event.resultIndex;
+
+                    i <
+                    event.results.length;
+
+                    i++
+                ) {
+
+                    const transcript =
+                        event.results[i][0]
+                            .transcript;
+
+
+                    if (
+                        event.results[i]
+                            .isFinal
+                    ) {
+
+                        finalText +=
+                            transcript;
+
+                    }
+
+                    else {
+
+                        interimText +=
+                            transcript;
+
+                    }
+
+                }
+
+
+                const text =
+                    (
+                        finalText ||
+                        interimText
+                    ).trim();
+
+
+                if (text) {
+
+                    messageInput.value =
+                        text;
+
+                }
+
+
+                if (
+                    finalText.trim()
+                ) {
+
+                    voiceStatus.textContent =
+                        "🎙️ Got it. Press send.";
+
+                }
+
+            };
+
+
+        instance.onerror =
+            (event) => {
+
+                console.error(
+                    "VOICE ERROR:",
+                    event.error
+                );
+
+
+                voiceStatus.style.display =
+                    "block";
+
+
+                voiceStatus.textContent =
+                    "⚠️ Voice input failed.";
+
+
+                stopListeningUI();
+
+            };
+
+
+        instance.onend =
+            () => {
+
+                stopListeningUI();
+
+            };
+
+
+        return instance;
+
+    }
+
+
+    function stopListeningUI() {
+
+        isListening =
+            false;
+
+
+        voiceButton.classList.remove(
+            "active"
+        );
+
+
+        setTimeout(
+            () => {
+
+                if (!isListening) {
+
+                    voiceStatus.style.display =
+                        "none";
+
+                }
+
+            },
+            1600
+        );
+
+    }
+
+
+    window.toggleVoice =
+        function() {
+
+            if (isListening) {
+
+                try {
+
+                    recognition?.stop();
+
+                }
+
+                catch (_) {}
+
+
+                stopListeningUI();
+
+                return;
+
+            }
+
+
+            const SpeechRecognition =
+                window.SpeechRecognition
+                ||
+                window.webkitSpeechRecognition;
+
+
+            if (!SpeechRecognition) {
+
+                alert(
+                    "Voice input is not supported in this browser. " +
+                    "Please use Chrome or Edge."
+                );
+
+                return;
+
+            }
+
+
+            recognition =
+                setupRecognition();
+
+
+            if (!recognition) {
+
+                return;
+
+            }
+
+
+            recognition.lang =
+                getSpeechLocale(
+                    languageSelect.value
+                );
+
+
+            try {
+
+                recognition.start();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "VOICE START ERROR:",
+                    error
+                );
+
+                stopListeningUI();
+
+            }
+
+        };
+
+
+    // =========================================================
+    // TEXT TO SPEECH
+    // =========================================================
+
+    window.speakText =
+        function(text) {
+
+            if (
+                !(
+                    "speechSynthesis"
+                    in window
+                )
+            ) {
+
+                alert(
+                    "Text-to-speech is not supported."
+                );
+
+                return;
+
+            }
+
+
+            window.speechSynthesis.cancel();
+
+
+            const speech =
+                new SpeechSynthesisUtterance(
+                    String(text)
+                );
+
+
+            speech.lang =
+                getSpeechLocale(
+                    languageSelect.value
+                );
+
+
+            speech.rate =
+                0.95;
+
+
+            speech.pitch =
+                1;
+
+
+            window.speechSynthesis.speak(
+                speech
+            );
+
+        };
+
+
+    // =========================================================
+    // LANGUAGE
+    // =========================================================
+
+    window.changeLanguage =
+        function() {
+
+            if (
+                recognition &&
+                isListening
+            ) {
+
+                try {
+
+                    recognition.stop();
+
+                }
+
+                catch (_) {}
+
+            }
+
+        };
+
+
+    // =========================================================
+    // ENTER KEY
+    // =========================================================
+
+    messageInput.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter"
+                &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                window.handleSend();
+
+            }
+
+        }
+    );
+
+
+    imageQuestionInput.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                window.handleSend();
+
+            }
+
+        }
+    );
+
+
+    // =========================================================
+    // TEXTAREA AUTO SIZE
+    // =========================================================
+
+    messageInput.addEventListener(
+        "input",
+        () => {
+
+            messageInput.style.height =
+                "auto";
+
+
+            messageInput.style.height =
+                Math.min(
+                    messageInput.scrollHeight,
+                    120
+                ) + "px";
+
+        }
+    );
+
+
+    // =========================================================
+    // INITIALIZE
+    // =========================================================
+
+    scrollChat();
+
+});
+</script>
+
+</body>
+</html>
